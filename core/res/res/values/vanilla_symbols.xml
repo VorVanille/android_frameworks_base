@@ -26,4 +26,12 @@
   <java-symbol type="integer" name="config_notificationsBatteryReallyFullARGB" />
   <java-symbol type="array" name="notification_light_package_mapping" />
   <java-symbol type="array" name="config_notificationNoAlertsVibePattern" />
+
+  <!-- Advanced Power menu w/ restart options -->
+  <java-symbol type="array" name="shutdown_reboot_options" />
+  <java-symbol type="array" name="shutdown_reboot_actions" />
+  <java-symbol type="string" name="reboot_title" />
+  <java-symbol type="string" name="reboot_confirm" />
+  <java-symbol type="string" name="reboot_progress" />
+
 </resources>
