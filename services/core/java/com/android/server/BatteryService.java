@@ -152,6 +152,7 @@ public final class BatteryService extends SystemService {
     private int mBatteryLowARGB;
     private int mBatteryMediumARGB;
     private int mBatteryFullARGB;
+    private int mBatteryReallyFullARGB;
     private boolean mMultiColorLed;
 
     // Disable LED until SettingsObserver can be started
@@ -863,8 +864,13 @@ public final class BatteryService extends SystemService {
             } else if ((status == BatteryManager.BATTERY_STATUS_CHARGING
                     || status == BatteryManager.BATTERY_STATUS_FULL) && mBatteryLedEnabled) {
                 if (status == BatteryManager.BATTERY_STATUS_FULL || level >= 90) {
-                    // Battery is full or charging and nearly full
-                    mBatteryLight.setColor(mBatteryFullARGB);
+                    if (level == 100) {
+                        // Battery is really full
+                        mBatteryLight.setColor(mBatteryReallyFullARGB);
+                    } else {
+                        // Battery is full or charging and nearly full
+                        mBatteryLight.setColor(mBatteryFullARGB);
+                    }
                 } else {
                     // Battery is charging and halfway full
                     mBatteryLight.setColor(mBatteryMediumARGB);
@@ -1011,6 +1017,9 @@ public final class BatteryService extends SystemService {
                 resolver.registerContentObserver(
                         Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_FULL_COLOR),
                         false, this, UserHandle.USER_ALL);
+                resolver.registerContentObserver(
+                        Settings.System.getUriFor(Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR),
+                        false, this, UserHandle.USER_ALL);
             }
 
             update();
@@ -1042,6 +1051,9 @@ public final class BatteryService extends SystemService {
             mBatteryFullARGB = Settings.System.getInt(resolver,
                     Settings.System.BATTERY_LIGHT_FULL_COLOR, res.getInteger(
                     com.android.internal.R.integer.config_notificationsBatteryFullARGB));
+            mBatteryReallyFullARGB = Settings.System.getInt(resolver,
+                    Settings.System.BATTERY_LIGHT_REALLY_FULL_COLOR, res.getInteger(
+                    com.android.internal.R.integer.config_notificationsBatteryReallyFullARGB));
 
             updateLedPulse();
         }
