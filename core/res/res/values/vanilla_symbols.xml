@@ -17,10 +17,10 @@
 <resources>
   <!-- Default dialer package -->
   <java-symbol type="string" name="default_dialer_application" />
-	
+
   <!-- Vendor warning -->
   <java-symbol type="string" name="system_error_vendorprint" />
-	
+
   <!-- Notification and battery light -->
   <java-symbol type="bool" name="config_multiColorNotificationLed" />
   <java-symbol type="bool" name="config_intrusiveBatteryLed" />
@@ -39,8 +39,11 @@
 
   <!-- Quick settings tiles columns and rows config -->
   <java-symbol type="integer" name="config_qs_num_rows_landscape_default"/>
-    
+
   <!-- Screen Recording -->
   <java-symbol type="bool" name="config_enableScreenrecordChord" />
-    
+
+  <!-- Kill app back press -->
+  <java-symbol type="string" name="app_killed_message" />
+  <java-symbol type="integer" name="config_backKillTimeout" />
 </resources>

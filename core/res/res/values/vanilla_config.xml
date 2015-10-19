@@ -2,13 +2,10 @@
 <!--
      Copyright (C) 2016 Krexus
 	 Copyright (C) 2017 VanillaNexus
-
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
-
      You may obtain a copy of the License at
           http://www.apache.org/licenses/LICENSE-2.0
-
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +19,6 @@
          of their choosing.
          This can be overridden for devices where a different default Dialer
          application is desired.
-
          If this string is empty or the specified package does not exist, then
          the platform will search for a system Dialer app and use that (if there is one)-->
 	
@@ -58,5 +54,8 @@
 
     <!-- Quick settings tiles columns and rows config -->
     <integer name="config_qs_num_rows_landscape_default">2</integer>
+
+    <!-- back kill timeout -->
+    <integer name="config_backKillTimeout">1000</integer>
 
 </resources>
