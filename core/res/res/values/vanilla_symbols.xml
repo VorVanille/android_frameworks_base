@@ -17,7 +17,10 @@
 <resources>
   <!-- Default dialer package -->
   <java-symbol type="string" name="default_dialer_application" />
-
+	
+  <!-- Vendor warning -->
+  <java-symbol type="string" name="system_error_vendorprint" />
+	
   <!-- Notification and battery light -->
   <java-symbol type="bool" name="config_multiColorNotificationLed" />
   <java-symbol type="bool" name="config_intrusiveBatteryLed" />
