@@ -2252,6 +2252,9 @@ message MetricsEvent {
 
     // Vanilla Tweaks
     VANILLA = 499;
+    
+    // Quick Settings for screenshot tile
+    QUICK_SETTINGS = 500;
 
   }
 }

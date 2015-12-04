@@ -33,7 +33,6 @@ import android.util.AttributeSet;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -64,7 +63,7 @@ import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 
 public class QuickStatusBarHeader extends BaseStatusBarHeader implements
-        NextAlarmChangeCallback, OnClickListener, OnLongClickListener, OnUserInfoChangedListener, 
+        NextAlarmChangeCallback, OnClickListener, OnUserInfoChangedListener, 
         StatusBarHeaderMachine.IStatusBarHeaderMachineObserver, EmergencyListener, SignalCallback {
 
     private static final String TAG = "QuickStatusBarHeader";
