@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-<<<<<<< HEAD
-     Copyright (C) 2016 Krexus
-	 Copyright (C) 2017 VanillaNexus
-=======
     Copyright (C) 2016 Krexus
 	Copyright (C) 2017 VanillaNexus
->>>>>>> a8e177e... Config setting for default dialer app (1/2)
-
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
 
@@ -33,4 +27,26 @@
 	
     <string name="default_dialer_application" translatable="false">com.android.dialer</string>
 	
+    <!-- Does the notification LED support multiple colors -->
+    <bool name="config_multiColorNotificationLed">false</bool>
+
+    <!-- Is the battery LED intrusive? -->
+    <bool name="config_intrusiveBatteryLed">false</bool>
+
+    <!-- Does the battery LED support multiple colors? -->
+    <bool name="config_multiColorBatteryLed">false</bool>
+
+    <!-- Do the battery/notification LEDs support pulsing?
+         Used to decide if we show pulse settings -->
+    <bool name="config_ledCanPulse">true</bool>
+
+    <!-- Vibrator pattern for notifications while alerts
+         are disabled -->
+    <integer-array name="config_notificationNoAlertsVibePattern">
+        <item>0</item>
+        <item>50</item>
+        <item>100</item>
+        <item>50</item>
+    </integer-array>
+
 </resources>
