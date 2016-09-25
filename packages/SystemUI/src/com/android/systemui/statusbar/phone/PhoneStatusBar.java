@@ -378,18 +378,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // settings
     private QSPanel mQSPanel;
 
-<<<<<<< HEAD
-=======
-    // show lte/4g switch
-    private boolean mShowLteFourGee;
-
-    // data/wifi activity arrows
-    private boolean mDataWifiActivityArrows;
-
     // qs headers
     private StatusBarHeaderMachine mStatusBarHeaderMachine;
-
->>>>>>> 16cdeb44eab... Custom QS header images [1/2]
+            
     // top bar
     BaseStatusBarHeader mHeader;
     protected KeyguardStatusBarView mKeyguardStatusBar;
