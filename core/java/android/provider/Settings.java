@@ -3754,6 +3754,13 @@ public final class Settings {
         public static final String STATUSBAR_CLOCK_STYLE = "statusbar_clock_style";
 
         /**
+         * Whether to allow screen record chord to take selectable screenshots
+         * @hide
+         */
+        public static final String SCREENRECORD_CHORD_TYPE = "screenrecord_chord_type";
+
+
+        /**
          * Whether to use the custom status bar header or not
          * @hide
          */
