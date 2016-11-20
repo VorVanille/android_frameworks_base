@@ -1,0 +1,6 @@
+    <!-- Navbar tuner -->
+    <string name="navbar_tuner_title">Navigation bar tuner</string>
+    <!-- statusbar items tuner -->
+    <string name="statusbar_icon_tweaks">Status bar icons</string>
+    <!-- notification controls -->
+    <string name="tuner_notification_control">Power notification controls</string>
