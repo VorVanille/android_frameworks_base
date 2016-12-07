@@ -29,11 +29,21 @@
     <dimen name="opa_overshoot_translation">8.0dip</dimen>
     <dimen name="opa_return_translation">-1.0dip</dimen>
     <dimen name="opa_rest_to_collapse">7.0dip</dimen>
+	
     <!-- carrier label text height -->
     <dimen name="status_bar_carrier_height">14dp</dimen>
+	
     <!-- Status bar notification ticker -->
     <dimen name="ticker_start_padding">6dp</dimen>
     <dimen name="ticker_icon_end_margin">4dp</dimen>
     <dimen name="ticker_text_top_padding">2dp</dimen>
     <dimen name="ticker_text_end_padding">10dp</dimen>
+
+    <!-- Clear-All recents FAB -->
+    <dimen name="floating_action_button_height">54dp</dimen>
+    <dimen name="floating_action_button_width">54dp</dimen>
+    <dimen name="floating_action_button_translation_z">12dp</dimen>
+    <dimen name="floating_action_button_margin_side">32dp</dimen>
+    <dimen name="floating_action_button_margin_bottom">46dp</dimen>
+
 </resources>
