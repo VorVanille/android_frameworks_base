@@ -3457,9 +3457,16 @@ public final class Settings {
                 "notification_light_screen_on_enable";
 
         /**
+         * Whether to enable the pixel navbar animation
+         * @hide
+         */
+        public static final String PIXEL_NAV_ANIMATION = "pixel_nav_animation";
+
+        /**
          * Show pointer location on screen?
          * 0 = no
          * 1 = yes
+         * Whether the proximity sensor will adjust call to speaker
          * @hide
          */
         public static final String POINTER_LOCATION = "pointer_location";
