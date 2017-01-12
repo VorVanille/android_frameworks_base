@@ -148,6 +148,7 @@ import com.android.systemui.classifier.FalsingLog;
 import com.android.systemui.classifier.FalsingManager;
 import com.android.systemui.doze.DozeHost;
 import com.android.systemui.doze.DozeLog;
+import com.android.systemui.du.headers.StatusBarHeaderMachine;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.qs.QSContainer;
 import com.android.systemui.qs.QSPanel;
@@ -377,6 +378,18 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // settings
     private QSPanel mQSPanel;
 
+<<<<<<< HEAD
+=======
+    // show lte/4g switch
+    private boolean mShowLteFourGee;
+
+    // data/wifi activity arrows
+    private boolean mDataWifiActivityArrows;
+
+    // qs headers
+    private StatusBarHeaderMachine mStatusBarHeaderMachine;
+
+>>>>>>> 16cdeb44eab... Custom QS header images [1/2]
     // top bar
     BaseStatusBarHeader mHeader;
     protected KeyguardStatusBarView mKeyguardStatusBar;
@@ -470,7 +483,13 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_ROWS_LANDSCAPE),
                     false, this, UserHandle.USER_ALL);
-            update();
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
+                  false, this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(Settings.System.getUriFor(
+                  Settings.System.STATUS_BAR_CUSTOM_HEADER),
+                  false, this, UserHandle.USER_ALL);
+           update();
         }
 
         @Override
@@ -1149,6 +1168,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
+
+        // qs headers
+        mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
+        mStatusBarHeaderMachine.addObserver((QuickStatusBarHeader) mHeader);
+        mStatusBarHeaderMachine.updateEnablement();
 
         return mStatusBarView;
     }
@@ -3978,6 +4002,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         mLockscreenWallpaper.setCurrentUser(newUserId);
         mScrimController.setCurrentUser(newUserId);
         updateMediaMetaData(true, false);
+        mStatusBarHeaderMachine.updateEnablement();
     }
 
     private void setControllerUsers() {
