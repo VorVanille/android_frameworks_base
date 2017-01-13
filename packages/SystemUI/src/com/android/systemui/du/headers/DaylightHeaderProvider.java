@@ -49,7 +49,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.android.systemui.R;
-import com.android.internal.util.du.DuUtils;
+import com.android.internal.util.vanilla.VanillaUtils;
 
 public class DaylightHeaderProvider implements
         StatusBarHeaderMachine.IStatusBarHeaderProvider {
@@ -78,19 +78,11 @@ public class DaylightHeaderProvider implements
 
     public DaylightHeaderProvider(Context context) {
         mContext = context;
-
-        final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
-                UserHandle.USER_CURRENT) == 1;
-
-        if (customHeader) {
-            settingsChanged();
-        }
     }
 
     @Override
     public String getName() {
-        return TAG;
+        return "daylight";
     }
 
     @Override
@@ -98,17 +90,23 @@ public class DaylightHeaderProvider implements
         final String settingHeaderPackage = Settings.System.getStringForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK,
                 UserHandle.USER_CURRENT);
+        final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
+                UserHandle.USER_CURRENT) == 1;
 
-        if (settingHeaderPackage == null) {
-            loadDefaultHeaderPackage();
-        } else if (mSettingHeaderPackage == null || !settingHeaderPackage.equals(mSettingHeaderPackage)) {
-            mSettingHeaderPackage = settingHeaderPackage;
-            loadCustomHeaderPackage();
+        if (customHeader) {
+            if (settingHeaderPackage == null) {
+                loadDefaultHeaderPackage();
+            } else if (mSettingHeaderPackage == null || !settingHeaderPackage.equals(mSettingHeaderPackage)) {
+                mSettingHeaderPackage = settingHeaderPackage;
+                loadCustomHeaderPackage();
+            }
         }
     }
 
     @Override
     public void enableProvider() {
+        settingsChanged();
         startAlarm();
     }
 
@@ -340,7 +338,7 @@ public class DaylightHeaderProvider implements
             return null;
         }
 
-        if (!DuUtils.isAvailableApp(mPackageName, mContext)) {
+        if (!VanillaUtils.isAvailableApp(mPackageName, mContext)) {
             loadDefaultHeaderPackage();
         }
         try {
