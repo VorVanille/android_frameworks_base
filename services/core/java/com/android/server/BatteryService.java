@@ -882,45 +882,6 @@ public final class BatteryService extends SystemService {
         }
     }
 
-    class SettingsObserver extends ContentObserver {
-        SettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            ContentResolver resolver = mContext.getContentResolver();
-
-            // Charging battery LED light enabled
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.CHARGING_BATTERY_LED), false, this, UserHandle.USER_ALL);
-
-            // Low battery pulse
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.LOW_BATTERY_PULSE), false, this, UserHandle.USER_ALL);
-
-            update();
-        }
-
-        @Override public void onChange(boolean selfChange) {
-            update();
-        }
-
-        public void update() {
-            ContentResolver resolver = mContext.getContentResolver();
-            Resources res = mContext.getResources();
-
-            // Charging battery LED light enabled
-            mBatteryLedEnabled = Settings.System.getInt(resolver,
-                    Settings.System.CHARGING_BATTERY_LED, 0) != 0;
-
-            // Low battery pulse
-            mLowBatteryPulse = Settings.System.getInt(resolver,
-                        Settings.System.LOW_BATTERY_PULSE, 1) != 0;
-
-            mLed.updateLightsLocked();
-        }
-    }
-
     private final class BatteryListener extends IBatteryPropertiesListener.Stub {
         @Override public void batteryPropertiesChanged(BatteryProperties props) {
             final long identity = Binder.clearCallingIdentity();
