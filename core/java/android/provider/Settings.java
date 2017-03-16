@@ -3352,109 +3352,8 @@ public final class Settings {
          */
         public static final String NOTIFICATION_LIGHT_PULSE = "notification_light_pulse";
 
-        /**
-         * Whether the notification LED should stay on when the device is charging.
-         * The value is boolean (1 or 0).
-         * @hide
-         */
-        public static final String CHARGING_BATTERY_LED = "charging_battery_led";
-
-        /**
-         * Whether the notification LED should pulse when the battery is low.
-         * The value is boolean (1 or 0).
-         * @hide
-         */
-        public static final String LOW_BATTERY_PULSE = "low_battery_pulse";
-
         /** @hide */
         public static final Validator NOTIFICATION_LIGHT_PULSE_VALIDATOR = sBooleanValidator;
-
-        /**
-         * Whether the notification light will be allowed when in zen mode during downtime
-         * @hide
-         */
-        public static final String ALLOW_LIGHTS = "allow_lights";
-
-        /**
-         * What color to use for the battery LED while charging - low
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_LOW_COLOR = "battery_light_low_color";
-
-        /**
-         * What color to use for the battery LED while charging - medium
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_MEDIUM_COLOR = "battery_light_medium_color";
-
-        /**
-         * What color to use for the battery LED while charging - full
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_FULL_COLOR = "battery_light_full_color";
-
-        /**
-         * What color to use for the battery LED while charging - really full (100%)
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_REALLY_FULL_COLOR = "battery_light_really_full_color";
-
-        /**
-         * Whether the battery light should be enabled (if hardware supports it)
-         * The value is boolean (1 or 0).
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_ENABLED = "battery_light_enabled";
-
-        /**
-         * Whether the battery LED should repeatedly flash when the battery is low
-         * on charge. The value is boolean (1 or 0).
-         * @hide
-         */
-        public static final String BATTERY_LIGHT_PULSE = "battery_light_pulse";
-
-        /**
-         * What color to use for the notification LED by default
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_PULSE_DEFAULT_COLOR =
-                "notification_light_pulse_default_color";
-
-        /**
-         * How long to flash the notification LED by default
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_ON =
-                "notification_light_pulse_default_led_on";
-
-        /**
-         * How long to wait between flashes for the notification LED by default
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_PULSE_DEFAULT_LED_OFF =
-                "notification_light_pulse_default_led_off";
-
-        /**
-         * Whether to use the custom LED values for the notification pulse LED.
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_PULSE_CUSTOM_ENABLE =
-                "notification_light_pulse_custom_enable";
-
-        /**
-         * Which custom LED values to use for the notification pulse LED.
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_PULSE_CUSTOM_VALUES =
-                "notification_light_pulse_custom_values";
-
-        /**
-         * Whether to allow notifications with the screen on or DayDreams.
-         * The value is boolean (1 or 0). Default will always be false.
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_SCREEN_ON =
-                "notification_light_screen_on_enable";
 
         /**
          * Whether to enable the pixel navbar animation
@@ -3854,9 +3753,7 @@ public final class Settings {
             RINGTONE,
             LOCK_TO_APP_ENABLED,
             NOTIFICATION_SOUND,
-            ACCELEROMETER_ROTATION,
-            NOTIFICATION_LIGHT_SCREEN_ON,
-            ALLOW_LIGHTS,
+            ACCELEROMETER_ROTATION
         };
 
         /**
