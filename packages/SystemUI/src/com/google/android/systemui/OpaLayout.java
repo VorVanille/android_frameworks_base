@@ -62,7 +62,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     private int mAnimationState;
     private final ArraySet<Animator> mCurrentAnimators;
 
-    private boolean mIsLandscape;
+    private boolean mVertical;
     private boolean mIsPressed;
     private boolean mLongClicked;
     private boolean mOpaEnabled;
@@ -73,7 +73,6 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     private View mGreen;
     private View mYellow;
     private View mWhite;
-//    private View mHalo;
 
     private View mTop;
     private View mRight;
@@ -301,7 +300,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
     private ArraySet<Animator> getCollapseAnimatorSet() {
         final ArraySet<Animator> set = new ArraySet<Animator>();
         Animator animator;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator = getDeltaAnimatorY(mRed, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_ry), COLLAPSE_ANIMATION_DURATION_RY);
         } else {
             animator = getDeltaAnimatorX(mRed, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_ry), COLLAPSE_ANIMATION_DURATION_RY);
@@ -310,7 +309,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorX(mRed, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         set.add(getScaleAnimatorY(mRed, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         Animator animator2;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator2 = getDeltaAnimatorY(mBlue, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_bg), COLLAPSE_ANIMATION_DURATION_BG);
         } else {
             animator2 = getDeltaAnimatorX(mBlue, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_bg), COLLAPSE_ANIMATION_DURATION_BG);
@@ -319,7 +318,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorX(mBlue, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         set.add(getScaleAnimatorY(mBlue, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         Animator animator3;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator3 = getDeltaAnimatorY(mYellow, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_ry), COLLAPSE_ANIMATION_DURATION_RY);
         } else {
             animator3 = getDeltaAnimatorX(mYellow, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_ry), COLLAPSE_ANIMATION_DURATION_RY);
@@ -328,7 +327,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorX(mYellow, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         set.add(getScaleAnimatorY(mYellow, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         Animator animator4;
-        if (mIsLandscape) {
+        if (mVertical) {
             animator4 = getDeltaAnimatorY(mGreen, mCollapseInterpolator, getPxVal(R.dimen.opa_line_x_collapse_bg), COLLAPSE_ANIMATION_DURATION_BG);
         } else {
             animator4 = getDeltaAnimatorX(mGreen, mCollapseInterpolator, -getPxVal(R.dimen.opa_line_x_collapse_bg), COLLAPSE_ANIMATION_DURATION_BG);
@@ -338,16 +337,10 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorY(mGreen, 1.0f, DOTS_RESIZE_DURATION, mDotsFullSizeInterpolator));
         final Animator scaleAnimatorX = getScaleAnimatorX(mWhite, 1.0f, HOME_REAPPEAR_DURATION, mFastOutSlowInInterpolator);
         final Animator scaleAnimatorY = getScaleAnimatorY(mWhite, 1.0f, HOME_REAPPEAR_DURATION, mFastOutSlowInInterpolator);
-//        final Animator scaleAnimatorX2 = getScaleAnimatorX(mHalo, 1.0f, HOME_REAPPEAR_DURATION, mFastOutSlowInInterpolator);
-//        final Animator scaleAnimatorY2 = getScaleAnimatorY(mHalo, 1.0f, HOME_REAPPEAR_DURATION, mFastOutSlowInInterpolator);
         scaleAnimatorX.setStartDelay(HOME_REAPPEAR_ANIMATION_OFFSET);
         scaleAnimatorY.setStartDelay(HOME_REAPPEAR_ANIMATION_OFFSET);
-//        scaleAnimatorX2.setStartDelay(HOME_REAPPEAR_ANIMATION_OFFSET);
-//        scaleAnimatorY2.setStartDelay(HOME_REAPPEAR_ANIMATION_OFFSET);
         set.add(scaleAnimatorX);
         set.add(scaleAnimatorY);
-//        set.add(scaleAnimatorX2);
-//        set.add(scaleAnimatorY2);
         getLongestAnim((set)).addListener((Animator.AnimatorListener)new AnimatorListenerAdapter() {
             public void onAnimationEnd(final Animator animator) {
                 mCurrentAnimators.clear();
@@ -374,8 +367,6 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorY(mRight, DIAMOND_DOTS_SCALE_FACTOR, DIAMOND_ANIMATION_DURATION, mFastOutSlowInInterpolator));
         set.add(getScaleAnimatorX(mWhite, DIAMOND_HOME_SCALE_FACTOR, DIAMOND_ANIMATION_DURATION, mFastOutSlowInInterpolator));
         set.add(getScaleAnimatorY(mWhite, DIAMOND_HOME_SCALE_FACTOR, DIAMOND_ANIMATION_DURATION, mFastOutSlowInInterpolator));
-//        set.add(getScaleAnimatorX(mHalo, HALO_SCALE_FACTOR, MIN_DIAMOND_DURATION, mFastOutSlowInInterpolator));
-//        set.add(getScaleAnimatorY(mHalo, HALO_SCALE_FACTOR, MIN_DIAMOND_DURATION, mFastOutSlowInInterpolator));
         getLongestAnim(set).addListener((Animator.AnimatorListener)new AnimatorListenerAdapter() {
             public void onAnimationCancel(final Animator animator) {
                 mCurrentAnimators.clear();
@@ -390,7 +381,7 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
 
     private ArraySet<Animator> getLineAnimatorSet() {
         final ArraySet<Animator> set = new ArraySet<Animator>();
-        if (mIsLandscape) {
+        if (mVertical) {
             set.add(getDeltaAnimatorY(mRed, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_x_trans_ry), LINE_ANIMATION_DURATION_Y));
             set.add(getDeltaAnimatorX(mRed, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_y_translation), LINE_ANIMATION_DURATION_X));
             set.add(getDeltaAnimatorY(mBlue, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_x_trans_bg), LINE_ANIMATION_DURATION_Y));
@@ -405,8 +396,6 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
             set.add(getDeltaAnimatorY(mYellow, mFastOutSlowInInterpolator, -getPxVal(R.dimen.opa_line_y_translation), LINE_ANIMATION_DURATION_X));
             set.add(getDeltaAnimatorX(mGreen, mFastOutSlowInInterpolator, getPxVal(R.dimen.opa_line_x_trans_bg), LINE_ANIMATION_DURATION_Y));
         }
-//        set.add(getScaleAnimatorX(mHalo, 0.0f, HOME_RESIZE_DURATION, mHomeDisappearInterpolator));
-//        set.add(getScaleAnimatorY(mHalo, 0.0f, HOME_RESIZE_DURATION, mHomeDisappearInterpolator));
         getLongestAnim(set).addListener((Animator.AnimatorListener)new AnimatorListenerAdapter() {
             public void onAnimationCancel(final Animator animator) {
                 mCurrentAnimators.clear();
@@ -439,8 +428,6 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         set.add(getScaleAnimatorY(mYellow, 1.0f, RETRACT_ANIMATION_DURATION, mRetractInterpolator));
         set.add(getScaleAnimatorX(mWhite, 1.0f, RETRACT_ANIMATION_DURATION, mRetractInterpolator));
         set.add(getScaleAnimatorY(mWhite, 1.0f, RETRACT_ANIMATION_DURATION, mRetractInterpolator));
-//        set.add(getScaleAnimatorX(mHalo, 1.0f, RETRACT_ANIMATION_DURATION, mFastOutSlowInInterpolator));
-//        set.add(getScaleAnimatorY(mHalo, 1.0f, RETRACT_ANIMATION_DURATION, mFastOutSlowInInterpolator));
         getLongestAnim(set).addListener((Animator.AnimatorListener)new AnimatorListenerAdapter() {
             public void onAnimationEnd(final Animator animator) {
                 mCurrentAnimators.clear();
@@ -528,7 +515,6 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         mYellow = findViewById(R.id.yellow);
         mGreen = findViewById(R.id.green);
         mWhite = findViewById(R.id.white);
-//        mHalo = findViewById(R.id.halo);
         mHome = (KeyButtonView) findViewById(R.id.home_button);
 
         setOpaEnabled(true);
@@ -594,9 +580,9 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         ((ImageView) mWhite).setImageResource(resId);
     }
 
-    public void setLandscape(boolean landscape) {
-        mIsLandscape = landscape;
-        if (mIsLandscape) {
+    public void setVertical(boolean vertical) {
+        mVertical = vertical;
+        if (mVertical) {
             mTop = mGreen;
             mBottom = mBlue;
             mRight = mYellow;
@@ -625,17 +611,10 @@ public class OpaLayout extends FrameLayout implements ButtonDispatcher.ButtonInt
         mOpaEnabled = b2;
         int visibility;
         if (b2) {
-//            visibility = View.VISIBLE;
             showAllOpa();
         } else {
-//            visibility = View.INVISIBLE;
             hideAllOpa();
         }
-//        mBlue.setVisibility(visibility);
-//        mRed.setVisibility(visibility);
-//        mYellow.setVisibility(visibility);
-//        mGreen.setVisibility(visibility);
-//        mHalo.setVisibility(visibility);
     }
 
     private void hideAllOpa(){
