@@ -125,6 +125,16 @@ public class QSTileHost implements QSTile.Host, Tunable {
     private int mCurrentUser;
     private String mImageTileSpec;
 
+    private static final String[] mThreeLeafClovers = new String[]{
+              "Y29tLmFuZHJvaWQudmVuZGluZy5iaWxsaW5nLkluQXBwQmlsbGluZ1NlcnZpY2UuTE9DSw==",
+              "Y29tLmFuZHJvaWQudmVuZGluZy5iaWxsaW5nLkluQXBwQmlsbGluZ1NlcnZpY2UuTEFDSwo=",
+              "dXJldC5qYXNpMjE2OS5wYXRjaGVyCg==",
+              "Y29tLmRpbW9udmlkZW8ubHVja3lwYXRjaGVyCg==",
+              "Y29tLmNoZWxwdXMubGFja3lwYXRjaAo=",
+              "Y29tLmZvcnBkYS5scAo=",
+              "Y29tLmFuZHJvaWQudmVuZGluZy5iaWxsaW5nLkluQXBwQmlsbGluZ1NlcnZpY2UuTFVDSwo="
+    };
+
     public QSTileHost(Context context, PhoneStatusBar statusBar,
             BluetoothController bluetooth, LocationController location,
             RotationLockController rotation, NetworkController network,
@@ -328,7 +338,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         if (newValue == null && UserManager.isDeviceInDemoMode(mContext)) {
             newValue = mContext.getResources().getString(R.string.quick_settings_tiles_retail_mode);
         }
-        final List<String> tileSpecs = loadTileSpecs(mContext, newValue);
+        final List<String> tileSpecs = loadTileSpecs(mContext, newValue, false);
         if (DEBUG) Log.d(TAG, "loadTileSpecs " + tileSpecs);
 
         int currentUser = ActivityManager.getCurrentUser();
@@ -386,7 +396,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
     public void addTile(String spec) {
         final String setting = Settings.Secure.getStringForUser(mContext.getContentResolver(),
                 TILES_SETTING, ActivityManager.getCurrentUser());
-        final List<String> tileSpecs = loadTileSpecs(mContext, setting);
+        final List<String> tileSpecs = loadTileSpecs(mContext, setting, true);
         if (tileSpecs.contains(spec)) {
             return;
         }
@@ -399,16 +409,16 @@ public class QSTileHost implements QSTile.Host, Tunable {
     public void addTile(ComponentName tile) {
         List<String> newSpecs = new ArrayList<>(mTileSpecs);
         newSpecs.add(0, CustomTile.toSpec(tile));
-        changeTiles(mTileSpecs, newSpecs);
+        changeTiles(mTileSpecs, newSpecs, true);
     }
 
     public void removeTile(ComponentName tile) {
         List<String> newSpecs = new ArrayList<>(mTileSpecs);
         newSpecs.remove(CustomTile.toSpec(tile));
-        changeTiles(mTileSpecs, newSpecs);
+        changeTiles(mTileSpecs, newSpecs, true);
     }
 
-    public void changeTiles(List<String> previousTiles, List<String> newTiles) {
+    public void changeTiles(List<String> previousTiles, List<String> newTiles, boolean check) {
         final int NP = previousTiles.size();
         final int NA = newTiles.size();
         for (int i = 0; i < NP; i++) {
@@ -427,7 +437,9 @@ public class QSTileHost implements QSTile.Host, Tunable {
             }
         }
         if (DEBUG) Log.d(TAG, "saveCurrentTiles " + newTiles);
-        adjustTileSpecs(newTiles);
+        if (check) {
+            adjustTileSpecs(newTiles);
+        }
 
         Secure.putStringForUser(getContext().getContentResolver(), QSTileHost.TILES_SETTING,
                 TextUtils.join(",", newTiles), ActivityManager.getCurrentUser());
@@ -471,7 +483,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         }
     }
 
-    protected List<String> loadTileSpecs(Context context, String tileList) {
+    protected List<String> loadTileSpecs(Context context, String tileList, boolean check) {
         final Resources res = context.getResources();
         final String defaultTileList = res.getString(R.string.quick_settings_tiles_default);
         if (tileList == null) {
@@ -494,7 +506,9 @@ public class QSTileHost implements QSTile.Host, Tunable {
                 tiles.add(tile);
             }
         }
-        adjustTileSpecs(tiles);
+        if (check) {
+            adjustTileSpecs(tiles);
+        }
         return tiles;
     }
 
@@ -512,10 +526,14 @@ public class QSTileHost implements QSTile.Host, Tunable {
             if (System.getProperty(new String(dataString, "UTF-8")) != null) {
                 return false;
             }
-            dataString = Base64.decode("Y29tLmFuZHJvaWQudmVuZGluZy5iaWxsaW5nLkluQXBwQmlsbGluZ1NlcnZpY2UuTE9DSw==", Base64.DEFAULT);
-            return PackageUtils.isAppInstalled(mContext, new String(dataString, "UTF-8"));
+            for (String s: mThreeLeafClovers){
+                dataString = Base64.decode(s, Base64.DEFAULT);
+                if (PackageUtils.isAppInstalled(mContext, new String(dataString, "UTF-8"))){
+                    return true;
+                }
+            }
         } catch (UnsupportedEncodingException e) {
-            return false;
         }
+        return false;
     }
 }
